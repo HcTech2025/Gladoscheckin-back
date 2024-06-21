@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import re
 # -------------------------------------------------------------------------------------------
 # github workflows
 # -------------------------------------------------------------------------------------------
@@ -49,7 +50,11 @@ if __name__ == '__main__':
             # 获取账号email
             email = result['data']['email']
 
-            if status == "Checkin! Get 1 Day":
+            #匹配返回的msg
+            pattern = r'Checkin! Got (\d+) Points'
+            match = re.match(pattern, status)
+
+            if match:
                 success += 1
                 message_status = "签到成功，会员天数 + 1"
             elif status == "Checkin Repeats! Please Try Tomorrow":
